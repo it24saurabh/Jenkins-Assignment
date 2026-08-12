@@ -1,26 +1,30 @@
 pipeline {
     agent any
 
-    stages {
+    tools {
+        maven 'Maven'
+        jdk 'JDK17'
+    }
 
+    stages {
         stage('Build') {
             steps {
                 echo 'Building Java application...'
-                bat 'mvn clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying Java application...'
-                bat 'echo Deployment successful'
+                sh 'echo Deployment successful'
             }
         }
     }
@@ -29,7 +33,6 @@ pipeline {
         success {
             echo 'CI/CD Pipeline completed successfully!'
         }
-
         failure {
             echo 'CI/CD Pipeline failed.'
         }
